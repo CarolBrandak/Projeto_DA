@@ -3,6 +3,9 @@
 
 int main() {
     Application app;
-    app.readOrders();
+    app.readFile("encomendas.txt");
+    app.readFile("carrinhas.txt");
+    app.test();
+
     return 0;
 }

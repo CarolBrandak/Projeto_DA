@@ -19,10 +19,12 @@ using std::ifstream;
 class Application {
 public:
     Application();
-    //void initialMenu();
-    void readOrders();
+    void readFile(const string& fileName);
     void splitWord(const string& line, const string& type);
     void createNewOrder(vector<string> words);
+    void createNewVan(vector<string> words);
+
+    void test();
 
 private:
     struct Order{
@@ -39,6 +41,7 @@ private:
     };
 
     vector<Order> storage;
+    vector<Van> vans;
 };
 
 
