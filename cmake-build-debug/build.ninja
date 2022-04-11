@@ -39,13 +39,13 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /Users/luispaiva/CLionProjects/untitled/cmake-build-debug/
+cmake_ninja_workdir = /Users/luispaiva/CLionProjects/Projeto_DA/cmake-build-debug/
 
 #############################################
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Users/luispaiva/CLionProjects/untitled/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/luispaiva/CLionProjects/untitled -B/Users/luispaiva/CLionProjects/untitled/cmake-build-debug
+  COMMAND = cd /Users/luispaiva/CLionProjects/Projeto_DA/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/luispaiva/CLionProjects/Projeto_DA -B/Users/luispaiva/CLionProjects/Projeto_DA/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -57,7 +57,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Users/luispaiva/CLionProjects/untitled/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /Users/luispaiva/CLionProjects/Projeto_DA/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -72,13 +72,13 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 
 build cmake_object_order_depends_target_untitled: phony || CMakeFiles/untitled.dir
 
-build CMakeFiles/untitled.dir/main.cpp.o: CXX_COMPILER__untitled_Debug /Users/luispaiva/CLionProjects/untitled/main.cpp || cmake_object_order_depends_target_untitled
+build CMakeFiles/untitled.dir/main.cpp.o: CXX_COMPILER__untitled_Debug /Users/luispaiva/CLionProjects/Projeto_DA/main.cpp || cmake_object_order_depends_target_untitled
   DEP_FILE = CMakeFiles/untitled.dir/main.cpp.o.d
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk -std=gnu++14
   OBJECT_DIR = CMakeFiles/untitled.dir
   OBJECT_FILE_DIR = CMakeFiles/untitled.dir
 
-build CMakeFiles/untitled.dir/Application.cpp.o: CXX_COMPILER__untitled_Debug /Users/luispaiva/CLionProjects/untitled/Application.cpp || cmake_object_order_depends_target_untitled
+build CMakeFiles/untitled.dir/Application.cpp.o: CXX_COMPILER__untitled_Debug /Users/luispaiva/CLionProjects/Projeto_DA/Application.cpp || cmake_object_order_depends_target_untitled
   DEP_FILE = CMakeFiles/untitled.dir/Application.cpp.o.d
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk -std=gnu++14
   OBJECT_DIR = CMakeFiles/untitled.dir
@@ -109,7 +109,7 @@ build untitled: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/ma
 # =============================================================================
 
 #############################################
-# Folder: /Users/luispaiva/CLionProjects/untitled/cmake-build-debug
+# Folder: /Users/luispaiva/CLionProjects/Projeto_DA/cmake-build-debug
 
 build all: phony untitled
 

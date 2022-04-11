@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/luispaiva/CLionProjects/untitled/cmake-build-debug",
-		"source" : "/Users/luispaiva/CLionProjects/untitled"
+		"build" : "/Users/luispaiva/CLionProjects/Projeto_DA/cmake-build-debug",
+		"source" : "/Users/luispaiva/CLionProjects/Projeto_DA"
 	},
 	"version" : 
 	{
