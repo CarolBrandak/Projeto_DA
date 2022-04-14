@@ -15,33 +15,34 @@ using std::string;
 using std::vector;
 #include <fstream>
 using std::ifstream;
+#include "Estafeta.h"
+
+struct Order{
+    int volume;
+    int weight;
+    int reward;
+    int duration;
+};
 
 class Application {
 public:
+
     Application();
     void readFile(const string& fileName);
+    void initialMenu();
     void splitWord(const string& line, const string& type);
     void createNewOrder(vector<string> words);
-    void createNewVan(vector<string> words);
-
+    void createNewEstafeta(vector<string> words);
+    void sortOrders(vector<Order> & storage);
+    void sortEstafetas(vector<Estafeta> &estafetas);
     void test();
 
+
+
 private:
-    struct Order{
-        int volume;
-        int wheight;
-        int reward;
-        int duration;
-    };
-
-    struct Van{
-        int volMax;
-        int weightMax;
-        int cost;
-    };
-
     vector<Order> storage;
-    vector<Van> vans;
+    vector<Estafeta> estafetas;
+    int estafetaId = 1;
 };
 
 

@@ -6,3 +6,4 @@ volume peso recompensa duração(s)
 16 26 1590 728
 19 28 946 1021
 19 16 1967 865
+3 25 889 567
