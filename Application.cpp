@@ -122,30 +122,27 @@ void Application::sortEstafetas(vector<Estafeta> &estafetas) {
 void Application::orderstoEstafetas() {
     int j=0;
     int newVolume,newWeight;
+    for(int i = 0; i< storage.size();i++){
+        while( j!=estafetas.size()){
+            if(estafetas[j].getfreeVolume()>=storage[i].getVolume() && estafetas[j].getfreeWeight()>=storage[i].getWeight()){
+                newVolume=estafetas[j].getfreeVolume()-storage[i].getVolume();
+                estafetas[j].setfreeVolume(newVolume);
 
-    //while(!storage.empty()){
-        for(int i = 0; i< storage.size();i++){
-            while( j!=estafetas.size()){
-                if(estafetas[j].getfreeVolume()>=storage[i].getVolume() && estafetas[j].getfreeWeight()>=storage[i].getWeight()){
-                    newVolume=estafetas[j].getfreeVolume()-storage[i].getVolume();
-                    estafetas[j].setfreeVolume(newVolume);
+                newWeight=estafetas[j].getfreeWeight()-storage[i].getWeight();
+                estafetas[j].setfreeWeight(newWeight);
 
-                    newWeight=estafetas[j].getfreeWeight()-storage[i].getWeight();
-                    estafetas[j].setfreeWeight(newWeight);
+                estafetas[j].addEstafetaOrder(storage[i]);
 
-                    estafetas[j].addEstafetaOrder(storage[i]);
+                storage.erase(storage.begin()+i);
 
-                    storage.erase(storage.begin()+i);
+                sortEstafetas(estafetas);
 
-                    sortEstafetas(estafetas);
-
-                    j=0;
-                    i--;
-                    break;
-                }
-            j++;
+                j=0;
+                i--;
+                break;
             }
-            j=0;
+        j++;
         }
-    //}
+        j=0;
+    }
 }
