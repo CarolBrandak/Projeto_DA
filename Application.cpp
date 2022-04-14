@@ -1,12 +1,19 @@
 
 #include "Application.h"
-#include "Estafeta.h"
 
 Application::Application() = default;
 
 void Application::test() {
+    for(auto x: storage){
+        cout<<x.getVolume()<<"--"<<x.getWeight()<<endl;
+    }
     for(auto x: estafetas){
-        cout<<x.getVolumeMax()<<"--"<<x.getWeightMax()<<endl;
+        cout<<x.getId()<<"-->"<<x.getVolumeMax()<<"--"<<x.getWeightMax()<<endl;
+        cout<<x.getId()<<"-->"<<x.getfreeVolume()<<"--"<<x.getfreeWeight()<<endl<<endl;
+        for(auto i : x.getEstafetaOrders()){
+            cout<<x.getId()<<"-->"<<i.getVolume()<<"--"<<i.getWeight()<<endl;
+        }
+        cout<<endl;
     }
 }
 
@@ -15,6 +22,7 @@ void Application::initialMenu() {
     readFile("carrinhas.txt");
     sortOrders(storage);
     sortEstafetas(estafetas);
+    orderstoEstafetas();
     test();
 }
 
@@ -55,13 +63,9 @@ void Application::splitWord(const string& line, const string& type) {
 }
 
 void Application::createNewOrder(vector<string> words) { // word (volume / peso / recompensa /duração(s))
-    Order order{};
-    order.volume= std::stoi(words[0]);
-    order.weight= std::stoi(words[1]);
-    order.reward= std::stoi(words[2]);
-    order.duration= std::stoi(words[3]);
-
+    Order order = Order(orderID, std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]), std::stoi(words[3]));
     storage.push_back(order);
+    orderID++;
 }
 
 void Application::createNewEstafeta(vector<string> words) { // word (volMax / pesoMax / custo)
@@ -77,12 +81,12 @@ void Application::sortOrders(vector<Order> & storage) {
         swapped=false;
         for(int j = 0; j < size-i-1; j++)
         {
-            if(storage[j].volume < storage[j+1].volume){
+            if(storage[j].getVolume() < storage[j+1].getVolume()){
                 std::swap(storage[j],storage[j+1]);
                 swapped=true;
             }
-            else if(storage[j].volume == storage[j+1].volume){
-                if(storage[j].weight< storage[j+1].weight){
+            else if(storage[j].getVolume() == storage[j+1].getVolume()){
+                if(storage[j].getWeight()< storage[j+1].getWeight()){
                     std::swap(storage[j],storage[j+1]);
                     swapped=true;
                 }
@@ -100,12 +104,12 @@ void Application::sortEstafetas(vector<Estafeta> &estafetas) {
     for(int i = 0; i<size-1; i++){
         swapped=false;
         for(int j = 0; j< size-i-1; j++){
-            if(estafetas[j].getVolumeMax() > estafetas[j+1].getVolumeMax()){
+            if(estafetas[j].getfreeVolume() > estafetas[j+1].getfreeVolume()){
                 std::swap(estafetas[j],estafetas[j+1]);
                 swapped=true;
             }
-            else if(estafetas[j].getVolumeMax() == estafetas[j+1].getVolumeMax()){
-                if(estafetas[j].getWeightMax() > estafetas[j+1].getWeightMax()){
+            else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()){
+                if(estafetas[j].getfreeWeight() > estafetas[j+1].getfreeWeight()){
                     std::swap(estafetas[j],estafetas[j+1]);
                     swapped=true;
                 }
@@ -114,5 +118,24 @@ void Application::sortEstafetas(vector<Estafeta> &estafetas) {
         if(swapped==false){
             break;
         }
+    }
+}
+
+void Application::orderstoEstafetas() {
+    int j=0;
+    while(!storage.empty() && j != (estafetas.size()-1)  ){
+        for(int i = 0; i< storage.size();i++){
+            if(estafetas[j].getfreeVolume()>=storage[i].getVolume() && estafetas[j].getfreeWeight()>=storage[i].getWeight() ){
+                estafetas[j].setfreeVolume(estafetas[j].getfreeVolume()-storage[i].getVolume());
+                estafetas[j].setfreeWeight(estafetas[j].getfreeWeight()-storage[i].getWeight());
+                estafetas[j].addEstafetaOrder(storage[i]);
+                storage.erase(storage.begin()+i);
+                sortEstafetas(estafetas);
+                j=0;
+                continue;
+            }
+            j++;
+        }
+
     }
 }

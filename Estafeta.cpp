@@ -4,26 +4,27 @@
 
 #include "Estafeta.h"
 
-Estafeta::Estafeta(int id,int volMax,int weightMax, int cost) : id(id), volumeMax(volMax), weightMax(weightMax), cost(cost)  {}
+
+Estafeta::Estafeta(int id,int volMax,int weightMax, int cost) : id(id), volumeMax(volMax), weightMax(weightMax), cost(cost), freeVolume(volMax), freeWeight(weightMax)  {}
 
 int Estafeta::getId() const {
     return id;
 }
 
-int Estafeta::getEngagedVolume() const {
-    return engagedVolume;
+int Estafeta::getfreeVolume() const {
+    return freeVolume;
 }
 
-void Estafeta::setEngagedVolume(int engagedVolume) {
-    Estafeta::engagedVolume = engagedVolume;
+void Estafeta::setfreeVolume(int freeVolume) {
+    Estafeta::freeVolume = freeVolume;
 }
 
-int Estafeta::getEngagedWeight() const {
-    return engagedWeight;
+int Estafeta::getfreeWeight() const {
+    return freeWeight;
 }
 
-void Estafeta::setEngagedWeight(int engagedWeight) {
-    Estafeta::engagedWeight = engagedWeight;
+void Estafeta::setfreeWeight(int freeWeight) {
+    Estafeta::freeWeight = freeWeight;
 }
 
 int Estafeta::getVolumeMax() const {
@@ -33,4 +34,13 @@ int Estafeta::getVolumeMax() const {
 int Estafeta::getWeightMax() const {
     return weightMax;
 }
+
+void Estafeta::addEstafetaOrder(Order order) {
+    estafetaOrders.push_back(order);
+}
+
+const std::vector<Order> &Estafeta::getEstafetaOrders() const {
+    return estafetaOrders;
+}
+
 

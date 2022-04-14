@@ -1,32 +1,40 @@
 #ifndef UNTITLED_ESTAFETA_H
 #define UNTITLED_ESTAFETA_H
-
+#include "vector"
+#include "Order.h"
 
 class Estafeta {
 public:
+
     Estafeta(int id,int volMax,int weightMax, int cost);
 
     int getId() const;
 
-    int getEngagedVolume() const;
+    int getfreeVolume() const;
 
-    void setEngagedVolume(int engagedVolume);
+    void setfreeVolume(int freeVolume);
 
-    int getEngagedWeight() const;
+    int getfreeWeight() const;
 
-    void setEngagedWeight(int engagedWeight);
+    void setfreeWeight(int freeWeight);
 
     int getVolumeMax() const;
 
     int getWeightMax() const;
 
+    void addEstafetaOrder(Order order);
+
+    const std::vector<Order> &getEstafetaOrders() const;
+
 private:
     int id;
     int volumeMax;
-    int engagedVolume=0;
+    int freeVolume;
     int weightMax;
-    int engagedWeight=0;
+    int freeWeight;
     int cost;
+    std::vector<Order> estafetaOrders;
+
 };
 
 #endif //UNTITLED_ESTAFETA_H

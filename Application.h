@@ -16,13 +16,7 @@ using std::vector;
 #include <fstream>
 using std::ifstream;
 #include "Estafeta.h"
-
-struct Order{
-    int volume;
-    int weight;
-    int reward;
-    int duration;
-};
+#include "Order.h"
 
 class Application {
 public:
@@ -34,15 +28,16 @@ public:
     void createNewOrder(vector<string> words);
     void createNewEstafeta(vector<string> words);
     void sortOrders(vector<Order> & storage);
-    void sortEstafetas(vector<Estafeta> &estafetas);
+    void sortEstafetas(vector<Estafeta> & estafetas);
+    void orderstoEstafetas();
     void test();
-
 
 
 private:
     vector<Order> storage;
     vector<Estafeta> estafetas;
     int estafetaId = 1;
+    int orderID = 1;
 };
 
 
