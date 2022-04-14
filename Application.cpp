@@ -4,9 +4,7 @@
 Application::Application() = default;
 
 void Application::test() {
-    for(auto x: storage){
-        cout<<x.getVolume()<<"--"<<x.getWeight()<<endl;
-    }
+
     for(auto x: estafetas){
         cout<<x.getId()<<"-->"<<x.getVolumeMax()<<"--"<<x.getWeightMax()<<endl;
         cout<<x.getId()<<"-->"<<x.getfreeVolume()<<"--"<<x.getfreeWeight()<<endl<<endl;
@@ -123,19 +121,31 @@ void Application::sortEstafetas(vector<Estafeta> &estafetas) {
 
 void Application::orderstoEstafetas() {
     int j=0;
-    while(!storage.empty() && j != (estafetas.size()-1)  ){
-        for(int i = 0; i< storage.size();i++){
-            if(estafetas[j].getfreeVolume()>=storage[i].getVolume() && estafetas[j].getfreeWeight()>=storage[i].getWeight() ){
-                estafetas[j].setfreeVolume(estafetas[j].getfreeVolume()-storage[i].getVolume());
-                estafetas[j].setfreeWeight(estafetas[j].getfreeWeight()-storage[i].getWeight());
-                estafetas[j].addEstafetaOrder(storage[i]);
-                storage.erase(storage.begin()+i);
-                sortEstafetas(estafetas);
-                j=0;
-                continue;
-            }
-            j++;
-        }
+    int newVolume,newWeight;
 
-    }
+    //while(!storage.empty()){
+        for(int i = 0; i< storage.size();i++){
+            while( j!=estafetas.size()){
+                if(estafetas[j].getfreeVolume()>=storage[i].getVolume() && estafetas[j].getfreeWeight()>=storage[i].getWeight()){
+                    newVolume=estafetas[j].getfreeVolume()-storage[i].getVolume();
+                    estafetas[j].setfreeVolume(newVolume);
+
+                    newWeight=estafetas[j].getfreeWeight()-storage[i].getWeight();
+                    estafetas[j].setfreeWeight(newWeight);
+
+                    estafetas[j].addEstafetaOrder(storage[i]);
+
+                    storage.erase(storage.begin()+i);
+
+                    sortEstafetas(estafetas);
+
+                    j=0;
+                    i--;
+                    break;
+                }
+            j++;
+            }
+            j=0;
+        }
+    //}
 }
