@@ -41,12 +41,16 @@ void Application::initialMenu() {
     switch (choose) {
         case 1:
             createNewEstafeta();
+            break;
         case 3:
             seeStorage();
+            break;
         case 4:
             seeEstafetas();
+            break;
         case 5:
             optimizationMenu();
+            break;
     }
 }
 
