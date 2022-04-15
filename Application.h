@@ -28,16 +28,19 @@ public:
     void createNewOrder(vector<string> words);
     void createNewEstafeta(vector<string> words);
     void sortOrders(vector<Order> & storage);
+    void sortOrdersReward(vector<Order> & storage);//Ordena as orders por reward de maior para menor
     void sortEstafetas(vector<Estafeta> & estafetas);
+    void sortEstafetasCost(vector<Estafeta> & estafetas);//Orderna os estafetas de menor para maior cost
     void orderstoEstafetas();
     void test();
-
+    void setProfit();//Calcula o lucro e mete na variavel profit
 
 private:
     vector<Order> storage;
     vector<Estafeta> estafetas;
     int estafetaId = 1;
     int orderID = 1;
+    int profit;
 };
 
 

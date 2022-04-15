@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Application.cpp
+Application.h
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Application.h
+
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Application.h
+iostream
+-
+string
+-
+vector
+-
+fstream
+-
+Estafeta.h
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Estafeta.h
+Order.h
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Order.h
+
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Estafeta.h
+vector
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/vector
+Order.h
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Order.h
+
+C:/Users/anaca/OneDrive/Ambiente de Trabalho/Projeto_DA/Order.h
+

@@ -15,6 +15,10 @@ int Estafeta::getfreeVolume() const {
     return freeVolume;
 }
 
+int Estafeta::getCost() const {
+    return cost;
+}
+
 void Estafeta::setfreeVolume(int freeVolume) {
     Estafeta::freeVolume = freeVolume;
 }

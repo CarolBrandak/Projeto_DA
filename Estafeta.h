@@ -12,6 +12,8 @@ public:
 
     int getfreeVolume() const;
 
+    int getCost() const;
+
     void setfreeVolume(int freeVolume);
 
     int getfreeWeight() const;
