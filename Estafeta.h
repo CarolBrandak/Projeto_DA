@@ -24,6 +24,8 @@ public:
 
     void addEstafetaOrder(Order order);
 
+    int getCost() const;
+
     const std::vector<Order> &getEstafetaOrders() const;
 
 private:

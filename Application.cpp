@@ -220,3 +220,51 @@ void Application::createNewEstafeta() {
     estafetas.push_back(estafeta);
     initialMenu();
 }
+
+void Application::sortOrdersReward(vector<Order> &storage) {
+    int size = storage.size();
+    bool swapped;
+    for(int i = 0; i<size-1;i++){
+        swapped=false;
+        for(int j = 0; j < size-i-1; j++)
+        {
+            if(storage[j].getReward() > storage[j+1].getReward()){
+                std::swap(storage[j],storage[j+1]);
+                swapped=true;
+            }
+        }
+        if(swapped==false)
+            break;
+    }
+}
+
+void Application::sortEstafetasCost(vector<Estafeta> &estafetas) {
+    int size = estafetas.size();
+    bool swapped;
+
+    for(int i = 0; i<size-1; i++){
+        swapped=false;
+        for(int j = 0; j< size-i-1; j++){
+            if(estafetas[j].getCost() > estafetas[j+1].getCost()){
+                std::swap(estafetas[j],estafetas[j+1]);
+                swapped=true;
+            }
+        }
+        if(swapped==false){
+            break;
+        }
+    }
+}
+
+void Application::setProfit(){
+    profit=0;
+    for (auto x: estafetas) {
+        if(x.getEstafetaOrders().size()!=0){
+            profit-=x.getCost();
+            for(auto i: x.getEstafetaOrders()){
+                profit+=i.getReward();
+            }
+        }
+    }
+}
+

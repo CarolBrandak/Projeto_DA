@@ -43,4 +43,8 @@ const std::vector<Order> &Estafeta::getEstafetaOrders() const {
     return estafetaOrders;
 }
 
+int Estafeta::getCost() const {
+    return cost;
+}
+
 
