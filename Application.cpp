@@ -56,6 +56,7 @@ void Application::initialMenu() {\
                 cout<<"Invalid option, enter again!\n\n";
                 initialMenu();
                 break;
+
         }
     }
 }
