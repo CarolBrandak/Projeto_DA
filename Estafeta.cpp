@@ -51,6 +51,7 @@ bool Estafeta::isOccupied() const {
     return occupied;
 }
 
+
 void Estafeta::setOccupied(bool occupied) {
     Estafeta::occupied = occupied;
 }
