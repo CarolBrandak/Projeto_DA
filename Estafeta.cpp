@@ -47,4 +47,20 @@ int Estafeta::getCost() const {
     return cost;
 }
 
+bool Estafeta::isOccupied() const {
+    return occupied;
+}
+
+void Estafeta::setOccupied(bool occupied) {
+    Estafeta::occupied = occupied;
+}
+
+int Estafeta::getFreetime() const {
+    return freetime;
+}
+
+void Estafeta::setFreetime(int freetime) {
+    Estafeta::freetime = freetime;
+}
+
 

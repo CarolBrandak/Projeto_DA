@@ -8,7 +8,7 @@
 
 class Order {
 public:
-    Order(int Id, int volume, int weight, int reward, int i);
+    Order(int Id, int volume, int weight, int reward, int duration);
 
     int getId() const {
         return Id;
@@ -26,11 +26,14 @@ public:
         return reward;
     }
 
+    int getDuration() const;
+
 private:
     int Id;
     int volume;
     int weight;
     int reward;
+    int duration;
 
 };
 

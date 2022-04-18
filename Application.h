@@ -37,6 +37,8 @@ public:
 
     void sortEstafetasDesc(vector<Estafeta> & estafetas);
 
+    void sortEstafetas(vector<Estafeta> & estafetas);
+
     void optimizationEstafeta();
 
     void optimizationMenu();
@@ -48,6 +50,12 @@ public:
     void seeStorage();
 
     void seeEstafetas();
+
+    int numberEstafetasOccupied();
+
+    void searchEstafeta();
+
+    void auxSearchEstafeta();
 
     void sortOrdersReward(vector<Order> & storage);//Ordena as orders por reward de maior para menor
 
@@ -64,6 +72,7 @@ private:
     int estafetaId = 1;
     int orderID = 1;
     int profit;
+    bool stateApplication=true;
 };
 
 

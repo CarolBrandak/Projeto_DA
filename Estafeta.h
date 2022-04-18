@@ -28,6 +28,14 @@ public:
 
     const std::vector<Order> &getEstafetaOrders() const;
 
+    bool isOccupied() const;
+
+    void setOccupied(bool occupied);
+
+    int getFreetime() const;
+
+    void setFreetime(int freetime);
+
 private:
     int id;
     int volumeMax;
@@ -35,6 +43,8 @@ private:
     int weightMax;
     int freeWeight;
     int cost;
+    bool occupied = false;
+    int freetime = 8*3600;  // Assuming the Estafeta works 8 hours a day
     std::vector<Order> estafetaOrders;
 
 };
