@@ -15,7 +15,7 @@ void Application::test() {
     }
 }
 
-void Application::initialMenu() {
+void Application::initialMenu() {\
     int choose;
     cout<< "----------------------------------------------------" <<endl;
     cout << "Choose an option:" << endl;
@@ -29,14 +29,6 @@ void Application::initialMenu() {
     std::cin>>choose;
 
     while(stateApplication){
-
-        if (std::cin.fail()){
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-            cout<<"Invalid option, enter again!\n\n";
-            initialMenu();
-            break;
-        }
 
         switch (choose) {
             case 0:
@@ -59,6 +51,7 @@ void Application::initialMenu() {
                 break;
             case 6:
                 searchEstafeta();
+                break;
             default:
                 cout<<"Invalid option, enter again!\n\n";
                 initialMenu();
@@ -226,12 +219,11 @@ void Application::optimizationMenu() {
             sortEstafetas(estafetas);
             optimizationEstafeta();
             numberEstafetasOccupied();
-            //test();
         case 0:
             initialMenu();
             break;
         default:
-            cout<<"Invalid option, enter aaagain!\n\n";
+            cout<<"Invalid option, enter again!\n\n";
             optimizationMenu();
             break;
     }
@@ -328,23 +320,29 @@ int Application::numberEstafetasOccupied() {
             count++;
     }
     cout<<"Will be used "<<count<<" Estafetas"<<endl;
+    cout<<"Storage has "<<storage.size()<<" orders"<<endl;
     return count;
 }
 
 void Application::searchEstafeta() {
-    int id; char choose;
+    int id;
     cout <<"Estafeta ID:";
     std::cin>>id;
     cout<<"Encomendas --> Estafeta ID:"<<id<<endl;
-    for(auto x: estafetas){
-        if(x.getId()==id){
-            if(x.getEstafetaOrders().empty()){
-                cout<<"No orders to deliver."<<endl;
-                break;
-            }
-            else{
-                for(auto i: x.getEstafetaOrders())
-                    cout << "ID:" << i.getId() << "  volume:" << i.getVolume() << " peso:" << i.getWeight()<<endl;
+    if(id > estafetas.size()){
+        cout<<"Invalid ID!"<< endl;
+    }
+    else{
+        for(auto x: estafetas){
+            if(x.getId()==id){
+                if(x.getEstafetaOrders().empty()){
+                    cout<<"No orders to deliver."<<endl;
+                    break;
+                }
+                else{
+                    for(auto i: x.getEstafetaOrders())
+                        cout << "ID:" << i.getId() << "  volume:" << i.getVolume() << " peso:" << i.getWeight()<<endl;
+                }
             }
         }
     }
