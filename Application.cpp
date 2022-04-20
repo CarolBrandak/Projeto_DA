@@ -88,10 +88,10 @@ void Application::splitWord(const string& line, const string& type) {
         else word+=i;
     }
     words.push_back(word);
-    if(type == "encomendas.txt"){
+    if(type == "encomendas1.txt"){
         updateOrders(words);
     }
-    if(type == "carrinhas.txt"){
+    if(type == "carrinhas1.txt"){
         updateEstafetas(words);
     }
 }
@@ -166,28 +166,28 @@ void Application::sortEstafetas(vector<Estafeta> &estafetas) {
                 swapped=true;
             }
             else if(estafetas[j].isOccupied() && estafetas[j+1].isOccupied()){
-                if(estafetas[j].getfreeVolume() > estafetas[j+1].getfreeVolume()){
+                if((estafetas[j].getfreeVolume()*estafetas[j].getfreeWeight()) > (estafetas[j+1].getfreeVolume()*estafetas[j+1].getfreeWeight())){
                     std::swap(estafetas[j],estafetas[j+1]);
                     swapped=true;
                 }
-                else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()) {
+                /*else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()) {
                     if (estafetas[j].getfreeWeight() > estafetas[j + 1].getfreeWeight()) {
                         std::swap(estafetas[j], estafetas[j + 1]);
                         swapped = true;
                     }
-                }
+                }*/
             }
             else if(!estafetas[j].isOccupied() && !estafetas[j+1].isOccupied()){
                 if(estafetas[j].getfreeVolume() < estafetas[j+1].getfreeVolume()){
                     std::swap(estafetas[j],estafetas[j+1]);
                     swapped=true;
                 }
-                else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()) {
+                /*else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()) {
                     if (estafetas[j].getfreeWeight() < estafetas[j + 1].getfreeWeight()) {
                         std::swap(estafetas[j], estafetas[j + 1]);
                         swapped = true;
                     }
-                }
+                }*/
             }
         }
         if(swapped==false){
