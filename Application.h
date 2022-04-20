@@ -63,7 +63,7 @@ public:
      */
     void sortOrdersDesc(vector<Order> & storage);
 
-    void sortEstafetasDesc(vector<Estafeta> & estafetas);
+    //void sortEstafetasDesc(vector<Estafeta> & estafetas);
 
     /**
      * Sort the vector storage using Bubble Sort Technique
@@ -77,7 +77,7 @@ public:
     /**
      * minimize the number of Estafetas to deliver all orders or the largest number of orders in one day
      */
-    void optimizationEstafeta();
+    void optimizationEstafeta(int choose);
 
     /**
      * print optmization menu and choose the option
@@ -120,11 +120,20 @@ public:
      */
     void auxSearchEstafeta();
 
-    void sortOrdersReward(vector<Order> & storage);//Ordena as orders por reward de maior para menor
+    static bool sortOrdersProfit(const Order &order1, const Order &order2);
 
-    void sortEstafetasCost(vector<Estafeta> & estafetas);//Orderna os estafetas de menor para maior cost
+    static bool sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2);
 
-    void setProfit();//Calcula o lucro e mete na variavel profit
+    void optimizationProfit();
+
+    void profit();
+
+
+    //void sortOrdersReward(vector<Order> & storage);//Ordena as orders por reward de maior para menor
+
+    //void sortEstafetasCost(vector<Estafeta> & estafetas);//Orderna os estafetas de menor para maior cost
+
+    //void setProfit();//Calcula o lucro e mete na variavel profit
 
     void test();
 
@@ -134,7 +143,7 @@ private:
     vector<Estafeta> estafetas;
     int estafetaId = 1;
     int orderID = 1;
-    int profit;
+    //int profit;
     bool stateApplication=true;
 };
 

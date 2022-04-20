@@ -15,7 +15,8 @@ void Application::test() {
     }
 }
 
-void Application::initialMenu() {\
+void Application::initialMenu() {
+
     int choose;
     cout<< "----------------------------------------------------" <<endl;
     cout << "Choose an option:" << endl;
@@ -218,8 +219,15 @@ void Application::optimizationMenu() {
         case 1:
             sortOrdersDesc(storage);
             sortEstafetas(estafetas);
-            optimizationEstafeta();
+            optimizationEstafeta(choose);
             numberEstafetasOccupied();
+            profit();
+        case 2:
+            std::sort(storage.begin(),storage.end(), sortOrdersProfit);
+            std::sort(estafetas.begin(),estafetas.end(), sortEstafetasProfit);
+            optimizationEstafeta(choose);
+            numberEstafetasOccupied();
+            profit();
         case 0:
             initialMenu();
             break;
@@ -230,7 +238,7 @@ void Application::optimizationMenu() {
     }
 }
 
-void Application::optimizationEstafeta() {
+void Application::optimizationEstafeta(int choose) {
     int j=0;
     int newVolume,newWeight,newFreeTime;
     for(int i = 0; i< storage.size();i++){
@@ -252,8 +260,12 @@ void Application::optimizationEstafeta() {
 
                 storage.erase(storage.begin()+i);
 
-                sortEstafetas(estafetas);
-
+                if (choose == 1){
+                    sortEstafetas(estafetas);
+                }
+                if(choose == 2){
+                    std::sort(estafetas.begin(),estafetas.end(), sortEstafetasProfit);
+                }
                 j=0;
                 i--;
                 break;
@@ -364,51 +376,34 @@ void Application::auxSearchEstafeta() {
     }
 }
 
-/*
-void Application::sortOrdersReward(vector<Order> &storage) {
-    int size = storage.size();
-    bool swapped;
-    for(int i = 0; i<size-1;i++){
-        swapped=false;
-        for(int j = 0; j < size-i-1; j++)
-        {
-            if(storage[j].getReward() > storage[j+1].getReward()){
-                std::swap(storage[j],storage[j+1]);
-                swapped=true;
-            }
-        }
-        if(swapped==false)
-            break;
+bool Application::sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2) {
+    if(estafeta1.isOccupied() && !estafeta2.isOccupied())
+        return true;
+    if (!estafeta1.isOccupied() && !estafeta2.isOccupied()){
+        return ((estafeta1.getfreeVolume() * (double) (estafeta1.getfreeWeight())) / (estafeta1.getCost())) >=
+               ((estafeta2.getfreeVolume() * (double) (estafeta2.getfreeWeight())) / (estafeta2.getCost()));
     }
+    return false;
 }
 
-void Application::sortEstafetasCost(vector<Estafeta> &estafetas) {
-    int size = estafetas.size();
-    bool swapped;
-
-    for(int i = 0; i<size-1; i++){
-        swapped=false;
-        for(int j = 0; j< size-i-1; j++){
-            if(estafetas[j].getCost() > estafetas[j+1].getCost()){
-                std::swap(estafetas[j],estafetas[j+1]);
-                swapped=true;
-            }
-        }
-        if(swapped==false){
-            break;
-        }
-    }
+bool Application::sortOrdersProfit(const Order &order1, const Order &order2) {
+        return ((order1.getWeight()) * (double) (order1.getVolume()) / (order1.getReward())) >=
+               ((order2.getVolume() * (double) (order2.getWeight())) / (order2.getReward()));
 }
 
-void Application::setProfit(){
-    profit=0;
-    for (auto x: estafetas) {
-        if(x.getEstafetaOrders().size()!=0){
-            profit-=x.getCost();
-            for(auto i: x.getEstafetaOrders()){
-                profit+=i.getReward();
+void Application::profit() {
+
+    int rewards=0;
+    int cost=0;
+    for(auto x : estafetas){
+        if(x.isOccupied()){
+            cost+=x.getCost();
+            for(auto i : x.getEstafetaOrders()){
+                rewards+=i.getReward();
             }
         }
     }
-}*/
+    int profit=rewards-cost;
+    cout<<"Profit:"<<profit<<endl;
+}
 
