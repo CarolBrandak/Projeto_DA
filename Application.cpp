@@ -23,9 +23,10 @@ void Application::initialMenu() {
     cout<<"1. Create new Estafeta"<<endl;
     cout<<"2. Create new Order"<<endl;
     cout<<"3. Storage"<<endl;
-    cout<<"4. Estafetas"<<endl;
-    cout<<"5. Choose Opmization method"<< endl;
-    cout<<"6. Search for estafeta ID"<<endl; // apresentar as encomendas que esse estafeta tem para esse dia
+    cout<<"4. Express"<<endl;
+    cout<<"5. Estafetas"<<endl;
+    cout<<"6. Choose Opmization method"<< endl;
+    cout<<"7. Search for estafeta ID"<<endl; // apresentar as encomendas que esse estafeta tem para esse dia
     cout<<"0. Exit"<<endl;
     std::cin>>choose;
 
@@ -45,12 +46,15 @@ void Application::initialMenu() {
                 seeStorage();
                 break;
             case 4:
-                seeEstafetas();
+                seeExpressOrders();
                 break;
             case 5:
-                optimizationMenu();
+                seeEstafetas();
                 break;
             case 6:
+                optimizationMenu();
+                break;
+            case 7:
                 searchEstafeta();
                 break;
             default:
@@ -91,6 +95,10 @@ void Application::splitWord(const string& line, const string& type) {
     if(type == "encomendas1.txt"){
         updateOrders(words);
     }
+    //pode ser usado outro ficheiro para orders Express
+    if(type == "encomendas1.txt"){
+        updateExpress(words);
+    }
     if(type == "carrinhas1.txt"){
         updateEstafetas(words);
     }
@@ -99,6 +107,12 @@ void Application::splitWord(const string& line, const string& type) {
 void Application::updateOrders(vector<string> words) { // word (volume / peso / recompensa /duração(s))
     Order order = Order(orderID, std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]), std::stoi(words[3]));
     storage.push_back(order);
+    orderID++;
+}
+
+void Application::updateExpress(vector<string> words) { // word (volume / peso / recompensa /duração(s))
+    Order order = Order(orderID, std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]), std::stoi(words[3]));
+    expressOrders.push_back(order);
     orderID++;
 }
 
@@ -155,6 +169,22 @@ void Application::sortOrdersDesc(vector<Order> & storage) {
     }
 }*/
 
+void Application::sortOrdersTime(){
+    int size = expressOrders.size();
+    bool swapped;
+    for(int i = 0; i<size-1;i++){
+        swapped=false;
+        for(int j = 0; j < size-i-1; j++)
+        {
+            if(expressOrders[j].getDuration() > expressOrders[j+1].getDuration()){
+                std::swap(expressOrders[j],expressOrders[j+1]);
+                swapped=true;
+            }
+        }
+        if(swapped==false)
+            break;
+    }
+}
 void Application::sortEstafetas(vector<Estafeta> &estafetas) {
     int size = estafetas.size();
     bool swapped;
@@ -212,6 +242,7 @@ void Application::optimizationMenu() {
     cout<< "Choose a way to optimize:"<<endl;
     cout<< "1. Optimization by estafetas"<<endl;
     cout<< "2. Optimization by reward"<<endl;
+    cout<< "3. Optimization by express"<<endl;
     cout<<"0. Initial Menu"<<endl;
     std::cin>>choose;
 
@@ -227,6 +258,10 @@ void Application::optimizationMenu() {
             std::sort(estafetas.begin(),estafetas.end(), sortEstafetasProfit);
             optimizationEstafeta(choose);
             numberEstafetasOccupied();
+            profit();
+        case 3:
+            sortOrdersTime();
+            setExpressOrders();
             profit();
         case 0:
             initialMenu();
@@ -284,6 +319,14 @@ void Application::seeStorage() {
     initialMenu();
 }
 
+void Application::seeExpressOrders() {
+    for(auto x: expressOrders){
+        cout<<"ID:"<<x.getId()<<"  Volume:"<<x.getVolume()<<"  Weight:"<<x.getWeight()<<"  Reward:"<<x.getReward()<<"  Duration(seg):"<<x.getDuration()<<endl;
+    }
+    cout<<endl;
+    initialMenu();
+}
+
 void Application::seeEstafetas(){
     for(auto x: estafetas){
         cout<<"ID:"<<x.getId()<<"  Volume MAX:"<<x.getVolumeMax()<<"  Weight MAX:"<<x.getWeightMax()<<endl;
@@ -335,6 +378,25 @@ int Application::numberEstafetasOccupied() {
     cout<<"Will be used "<<count<<" Estafetas"<<endl;
     cout<<"Storage has "<<storage.size()<<" orders"<<endl;
     return count;
+}
+
+void Application::setExpressOrders() {
+    int count=0;
+    while(count<(8*60)){
+        count += expressOrders[0].getDuration();
+        if(count<(8*60)){
+            express.addEstafetaOrder(expressOrders[0]);
+            express.setOccupied(true);
+            expressOrders.erase(expressOrders.begin());
+        }
+    }
+    if(count>(8*60))
+        count -= expressOrders[0].getDuration();
+    while(expressOrders.size()>0)
+        expressOrders.erase(expressOrders.begin());
+
+    cout<<"Express Duration: "<<count<<" minutes"<<endl;
+    cout<<"Express has "<<express.getEstafetaOrders().size()<< " orders"<<endl;
 }
 
 void Application::searchEstafeta() {
@@ -401,6 +463,12 @@ void Application::profit() {
             for(auto i : x.getEstafetaOrders()){
                 rewards+=i.getReward();
             }
+        }
+    }
+    if (express.isOccupied()){
+        cost+=express.getCost();
+        for(auto i : express.getEstafetaOrders()){
+            rewards+=i.getReward();
         }
     }
     int profit=rewards-cost;

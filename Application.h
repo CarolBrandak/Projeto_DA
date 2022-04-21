@@ -15,6 +15,7 @@ using std::string;
 using std::vector;
 #include <fstream>
 using std::ifstream;
+#include <algorithm>
 #include "Estafeta.h"
 #include "Order.h"
 
@@ -50,6 +51,12 @@ public:
     void updateOrders(vector<string> words);
 
     /**
+     * Create new order and push that word to expressOrders vector
+     * @param words Order arguments
+     */
+    void updateExpress(vector<string> words);
+
+    /**
      * Create new Estafeta and push that Estafeta to estafetas vector
      * @param words Estafetas arguments
      */
@@ -62,6 +69,12 @@ public:
      * @param storage vector with orders
      */
     void sortOrdersDesc(vector<Order> & storage);
+
+    /**
+     * Sort the vector storage in ascent way using Bubble Sort Technique
+     * Criterio -> Duration
+     */
+    void sortOrdersTime();
 
     //void sortEstafetasDesc(vector<Estafeta> & estafetas);
 
@@ -105,10 +118,20 @@ public:
     void seeEstafetas();
 
     /**
+     * print every Estafeta in vector estafetas
+     */
+    void seeExpressOrders();
+
+    /**
      * Count the number of Estafetas Ocuppied and print that
      * @return
      */
     int numberEstafetasOccupied();
+
+    /**
+     * Erases orders from expressOrders vector with duration optimized
+     */
+    void setExpressOrders();
 
     /**
      * Search for the Estafeta in estafetas by estafeta id and print the Estafeta orders
@@ -140,6 +163,8 @@ public:
 
 private:
     vector<Order> storage;
+    vector<Order> expressOrders;
+    Estafeta express = Estafeta(0, 5000, 5000, 1000);
     vector<Estafeta> estafetas;
     int estafetaId = 1;
     int orderID = 1;
