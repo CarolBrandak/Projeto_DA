@@ -96,7 +96,7 @@ void Application::splitWord(const string& line, const string& type) {
         updateOrders(words);
     }
     //pode ser usado outro ficheiro para orders Express
-    if(type == "encomendas1.txt"){
+    if(type == "encomendasexpress1.txt"){
         updateExpress(words);
     }
     if(type == "carrinhas1.txt"){
@@ -106,7 +106,7 @@ void Application::splitWord(const string& line, const string& type) {
 
 void Application::updateOrders(vector<string> words) { // word (volume / peso / recompensa /duração(s))
     Order order = Order(orderID, std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]), std::stoi(words[3]));
-    storage.push_back(order);
+    originalstorage.push_back(order);
     orderID++;
 }
 
@@ -118,7 +118,7 @@ void Application::updateExpress(vector<string> words) { // word (volume / peso /
 
 void Application::updateEstafetas(vector<string> words) { // word (volMax / pesoMax / custo)
     Estafeta estafeta = Estafeta(estafetaId, std::stoi(words[0]), std::stoi(words[1]), std::stoi(words[2]));
-    estafetas.push_back(estafeta);
+    originalestafetas.push_back(estafeta);
     estafetaId++;
 }
 
@@ -144,30 +144,6 @@ void Application::sortOrdersDesc(vector<Order> & storage) {
             break;
     }
 }
-
-/*void Application::sortEstafetasDesc(vector<Estafeta> &estafetas) {
-    int size = estafetas.size();
-    bool swapped;
-
-    for(int i = 0; i<size-1; i++){
-        swapped=false;
-        for(int j = 0; j< size-i-1; j++){
-            if(estafetas[j].getfreeVolume() < estafetas[j+1].getfreeVolume()){
-                std::swap(estafetas[j],estafetas[j+1]);
-                swapped=true;
-            }
-            else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()){
-                if(estafetas[j].getfreeWeight() < estafetas[j+1].getfreeWeight()){
-                    std::swap(estafetas[j],estafetas[j+1]);
-                    swapped=true;
-                }
-            }
-        }
-        if(swapped==false){
-            break;
-        }
-    }
-}*/
 
 void Application::sortOrdersTime(){
     int size = expressOrders.size();
@@ -196,45 +172,22 @@ void Application::sortEstafetas(vector<Estafeta> &estafetas) {
                 swapped=true;
             }
             else if(estafetas[j].isOccupied() && estafetas[j+1].isOccupied()){
-                if((estafetas[j].getfreeVolume()*estafetas[j].getfreeWeight()) > (estafetas[j+1].getfreeVolume()*estafetas[j+1].getfreeWeight())){
+                if((estafetas[j].getfreeVolume() * estafetas[j].getfreeWeight()) > (estafetas[j+1].getfreeVolume()*estafetas[j+1].getfreeWeight())){
                     std::swap(estafetas[j],estafetas[j+1]);
                     swapped=true;
                 }
-                /*else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()) {
-                    if (estafetas[j].getfreeWeight() > estafetas[j + 1].getfreeWeight()) {
-                        std::swap(estafetas[j], estafetas[j + 1]);
-                        swapped = true;
-                    }
-                }*/
             }
             else if(!estafetas[j].isOccupied() && !estafetas[j+1].isOccupied()){
-                if(estafetas[j].getfreeVolume() < estafetas[j+1].getfreeVolume()){
+                if((estafetas[j].getfreeVolume()*estafetas[j].getfreeWeight()) < (estafetas[j+1].getfreeVolume()*estafetas[j+1].getfreeWeight())){
                     std::swap(estafetas[j],estafetas[j+1]);
                     swapped=true;
                 }
-                /*else if(estafetas[j].getfreeVolume() == estafetas[j+1].getfreeVolume()) {
-                    if (estafetas[j].getfreeWeight() < estafetas[j + 1].getfreeWeight()) {
-                        std::swap(estafetas[j], estafetas[j + 1]);
-                        swapped = true;
-                    }
-                }*/
             }
         }
         if(swapped==false){
             break;
         }
     }
-
-    /*for(auto x : estafetas){
-        cout<<"ID:"<<x.getId()<<"  Ocupado:"<<x.isOccupied()<<"  volume max:"<<x.getVolumeMax()<<" peso max:"<<x.getWeightMax()<<"  volume livre:"<<x.getfreeVolume()<<" peso livre:"<<x.getfreeWeight()<<endl;
-        for(auto i: x.getEstafetaOrders()) {
-            cout << "encomendas:" << endl;
-            cout << "ID:" << i.getId() << "  volume:" << i.getVolume() << " peso:" << i.getWeight()<<endl;
-        }
-        cout<<endl;
-    }*/
-    //cout<<endl;
-
 }
 
 void Application::optimizationMenu() {
@@ -253,16 +206,19 @@ void Application::optimizationMenu() {
             optimizationEstafeta(choose);
             numberEstafetasOccupied();
             profit();
+            break;
         case 2:
             std::sort(storage.begin(),storage.end(), sortOrdersProfit);
             std::sort(estafetas.begin(),estafetas.end(), sortEstafetasProfit);
             optimizationEstafeta(choose);
             numberEstafetasOccupied();
             profit();
+            break;
         case 3:
             sortOrdersTime();
             setExpressOrders();
             profit();
+            break;
         case 0:
             initialMenu();
             break;
@@ -271,9 +227,12 @@ void Application::optimizationMenu() {
             optimizationMenu();
             break;
     }
+    optimizationMenu();
 }
 
 void Application::optimizationEstafeta(int choose) {
+    estafetas=originalestafetas;
+    storage=originalstorage;
     int j=0;
     int newVolume,newWeight,newFreeTime;
     for(int i = 0; i< storage.size();i++){
@@ -369,7 +328,7 @@ void Application::createNewOrder() {
     initialMenu();
 }
 
-int Application::numberEstafetasOccupied() {
+void Application::numberEstafetasOccupied() {
     int count=0;
     for(auto x: estafetas){
         if(x.isOccupied())
@@ -377,7 +336,6 @@ int Application::numberEstafetasOccupied() {
     }
     cout<<"Will be used "<<count<<" Estafetas"<<endl;
     cout<<"Storage has "<<storage.size()<<" orders"<<endl;
-    return count;
 }
 
 void Application::setExpressOrders() {
@@ -442,15 +400,13 @@ bool Application::sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2
     if(estafeta1.isOccupied() && !estafeta2.isOccupied())
         return true;
     if (!estafeta1.isOccupied() && !estafeta2.isOccupied()){
-        return ((estafeta1.getfreeVolume() * (double) (estafeta1.getfreeWeight())) / (estafeta1.getCost())) >=
-               ((estafeta2.getfreeVolume() * (double) (estafeta2.getfreeWeight())) / (estafeta2.getCost()));
+        return ((estafeta1.getfreeVolume() * (double)(estafeta1.getfreeWeight())) / (estafeta1.getCost())) > ((estafeta2.getfreeVolume() * (double)(estafeta2.getfreeWeight())) / (estafeta2.getCost()));
     }
     return false;
 }
 
 bool Application::sortOrdersProfit(const Order &order1, const Order &order2) {
-        return ((order1.getWeight()) * (double) (order1.getVolume()) / (order1.getReward())) >=
-               ((order2.getVolume() * (double) (order2.getWeight())) / (order2.getReward()));
+        return ((order1.getWeight()) * (double) (order1.getVolume()) / (order1.getReward())) > ((order2.getVolume() * (double) (order2.getWeight())) / (order2.getReward()));
 }
 
 void Application::profit() {

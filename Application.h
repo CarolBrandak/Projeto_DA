@@ -126,7 +126,7 @@ public:
      * Count the number of Estafetas Ocuppied and print that
      * @return
      */
-    int numberEstafetasOccupied();
+    void numberEstafetasOccupied();
 
     /**
      * Erases orders from expressOrders vector with duration optimized
@@ -163,9 +163,11 @@ public:
 
 private:
     vector<Order> storage;
+    vector<Order> originalstorage;
     vector<Order> expressOrders;
     Estafeta express = Estafeta(0, 5000, 5000, 1000);
     vector<Estafeta> estafetas;
+    vector<Estafeta> originalestafetas;
     int estafetaId = 1;
     int orderID = 1;
     //int profit;
