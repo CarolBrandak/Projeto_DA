@@ -3,18 +3,6 @@
 
 Application::Application() = default;
 
-void Application::test() {
-
-    for(auto x: estafetas){
-        cout<<x.getId()<<"-->"<<x.getVolumeMax()<<"--"<<x.getWeightMax()<<endl;
-        cout<<x.getId()<<"-->"<<x.getfreeVolume()<<"--"<<x.getfreeWeight()<<endl<<endl;
-        for(auto i : x.getEstafetaOrders()){
-            cout<<x.getId()<<"-->"<<i.getVolume()<<"--"<<i.getWeight()<<endl;
-        }
-        cout<<endl;
-    }
-}
-
 void Application::initialMenu() {
 
     int choose;
@@ -26,7 +14,7 @@ void Application::initialMenu() {
     cout<<"4. Express"<<endl;
     cout<<"5. Estafetas"<<endl;
     cout<<"6. Choose Opmization method"<< endl;
-    cout<<"7. Search for estafeta ID"<<endl; // apresentar as encomendas que esse estafeta tem para esse dia
+    cout<<"7. Search for estafeta ID"<<endl;
     cout<<"0. Exit"<<endl;
     std::cin>>choose;
 
@@ -95,7 +83,6 @@ void Application::splitWord(const string& line, const string& type) {
     if(type == "encomendas1.txt"){
         updateOrders(words);
     }
-    //pode ser usado outro ficheiro para orders Express
     if(type == "encomendasexpress1.txt"){
         updateExpress(words);
     }
@@ -200,6 +187,7 @@ void Application::optimizationMenu() {
     std::cin>>choose;
 
     switch (choose) {
+
         case 1:
             sortOrdersDesc(originalstorage);
             sortEstafetas(originalestafetas);
@@ -227,7 +215,6 @@ void Application::optimizationMenu() {
             optimizationMenu();
             break;
     }
-    optimizationMenu();
 }
 
 void Application::optimizationEstafeta(int choose) {
@@ -308,7 +295,6 @@ void Application::seeEstafetas(){
 }
 
 void Application::createNewEstafeta() {
-    //Estafeta(int id,int volMax,int weightMax, int cost);
     int volMax,weightMax,cost;
     cout<<"Enter your Van max volume:";
     std::cin>>volMax;
@@ -319,12 +305,11 @@ void Application::createNewEstafeta() {
 
     Estafeta estafeta = Estafeta(estafetaId,volMax,weightMax,cost);
     estafetaId++;
-    estafetas.push_back(estafeta);
+    originalestafetas.push_back(estafeta);
     initialMenu();
 }
 
 void Application::createNewOrder() {
-    //Estafeta(int id,int volMax,int weightMax, int cost);
     int volume,weight,reward,duration;
     cout<<"Enter your Order volume:";
     std::cin>>volume;
@@ -337,7 +322,7 @@ void Application::createNewOrder() {
 
     Order order = Order(orderID,volume,weight,reward,duration);
     orderID++;
-    storage.push_back(order);
+    originalstorage.push_back(order);
     initialMenu();
 }
 
@@ -422,12 +407,10 @@ bool Application::sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2
 }
 
 bool Application::sortOrdersProfit(const Order &order1, const Order &order2) {
-        //return order1.getReward() > order2.getReward();
         return ((order1.getWeight()) * (double) (order1.getVolume()) / (order1.getReward())) > ((order2.getVolume() * (double) (order2.getWeight())) / (order2.getReward()));
 }
 
 void Application::profit() {
-
     int rewards=0;
     int cost=0;
     for(auto x : estafetas){

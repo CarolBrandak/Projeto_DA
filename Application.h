@@ -63,9 +63,7 @@ public:
     void updateEstafetas(vector<string> words);
 
     /**
-     * Sort the vector storage in descendent way using Bubble Sort Technique
-     * First criterio -> Volume
-     * Second criterio -> Weight
+     * Sort the vector storage in descendent way using Bubble Sort Technique (Formula Weight*Volume)
      * @param storage vector with orders
      */
     void sortOrdersDesc(vector<Order> & storage);
@@ -76,13 +74,11 @@ public:
      */
     void sortOrdersTime();
 
-    //void sortEstafetasDesc(vector<Estafeta> & estafetas);
-
     /**
      * Sort the vector storage using Bubble Sort Technique
      * First criterio -> Occupied
-     * Second criterio -> Occupied in ascendent way (first criterio->volume, second criterio ->weight)
-     * Third crirterio -> Not Occupied in descendent way (first criterio->volume, second criterio ->weight)
+     * Second criterio -> Occupied in ascendent way (using criteria weight*volume)
+     * Third crirterio -> Not Occupied in descendent way (using criteria weight*volume)
      * @param estafetas  vector with estafetas
      */
     void sortEstafetas(vector<Estafeta> & estafetas);
@@ -143,22 +139,28 @@ public:
      */
     void auxSearchEstafeta();
 
+    /**
+     * Sort orders using the formula ((Weight*Volume)/Reward)
+     * @param order1
+     * @param order2
+     * @return
+     */
     static bool sortOrdersProfit(const Order &order1, const Order &order2);
 
+    /**
+     * Order the Estafetas by
+     * 1st the using the Estafeta parameter Occupied
+     * if Estafetas are not ocuppied (descending order using the formula ((FreeWeight*FreeVolume)/Cost))
+     * if Estafetas are ocuppied (ascending order using the formula ((FreeWeight*FreeVolume)/Cost))
+     * @param estafeta1
+     * @param estafeta2
+     * @return
+     */
     static bool sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2);
-
-    void optimizationProfit();
-
+    /**
+     * Calculate the profit in these day
+     */
     void profit();
-
-
-    //void sortOrdersReward(vector<Order> & storage);//Ordena as orders por reward de maior para menor
-
-    //void sortEstafetasCost(vector<Estafeta> & estafetas);//Orderna os estafetas de menor para maior cost
-
-    //void setProfit();//Calcula o lucro e mete na variavel profit
-
-    void test();
 
 
 private:
@@ -170,7 +172,6 @@ private:
     vector<Estafeta> originalestafetas;
     int estafetaId = 1;
     int orderID = 1;
-    //int profit;
     bool stateApplication=true;
 };
 
