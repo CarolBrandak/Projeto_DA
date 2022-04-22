@@ -116,15 +116,9 @@ void Application::sortOrdersDesc(vector<Order> & storage) {
         swapped=false;
         for(int j = 0; j < size-i-1; j++)
         {
-            if(storage[j].getVolume() < storage[j+1].getVolume()){
+            if((storage[j].getVolume() * (double) storage[j].getVolume()) / storage[j].getDuration() < (storage[j+1].getVolume() * (double)storage[j+1].getWeight())/storage[j+1].getDuration()){
                 std::swap(storage[j],storage[j+1]);
                 swapped=true;
-            }
-            else if(storage[j].getVolume() == storage[j+1].getVolume()){
-                if(storage[j].getWeight() < storage[j+1].getWeight()){
-                    std::swap(storage[j],storage[j+1]);
-                    swapped=true;
-                }
             }
         }
         if(swapped==false)

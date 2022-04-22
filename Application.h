@@ -63,7 +63,7 @@ public:
     void updateEstafetas(vector<string> words);
 
     /**
-     * Sort the vector storage in descendent way using Bubble Sort Technique (Formula Weight*Volume)
+     * Sort the vector storage in descendent way using Bubble Sort Technique (Formula (Weight*Volume)/duration)
      * @param storage vector with orders
      */
     void sortOrdersDesc(vector<Order> & storage);
@@ -157,6 +157,7 @@ public:
      * @return
      */
     static bool sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2);
+
     /**
      * Calculate the profit in these day
      */
