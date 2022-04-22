@@ -201,15 +201,15 @@ void Application::optimizationMenu() {
 
     switch (choose) {
         case 1:
-            sortOrdersDesc(storage);
-            sortEstafetas(estafetas);
+            sortOrdersDesc(originalstorage);
+            sortEstafetas(originalestafetas);
             optimizationEstafeta(choose);
             numberEstafetasOccupied();
             profit();
             break;
         case 2:
-            std::sort(storage.begin(),storage.end(), sortOrdersProfit);
-            std::sort(estafetas.begin(),estafetas.end(), sortEstafetasProfit);
+            std::sort(originalstorage.begin(),originalstorage.end(), sortOrdersProfit);
+            std::sort(originalestafetas.begin(),originalestafetas.end(), sortEstafetasProfit);
             optimizationEstafeta(choose);
             numberEstafetasOccupied();
             profit();
@@ -271,14 +271,22 @@ void Application::optimizationEstafeta(int choose) {
 }
 
 void Application::seeStorage() {
-    for(auto x: storage){
-        cout<<"ID:"<<x.getId()<<"  Volume:"<<x.getVolume()<<"  Weight:"<<x.getWeight()<<"  Reward:"<<x.getReward()<<"  Duration(seg):"<<x.getDuration()<<endl;
+    if(storage.empty()){
+        for(auto x: originalstorage){
+            cout<<"ID:"<<x.getId()<<"  Volume:"<<x.getVolume()<<"  Weight:"<<x.getWeight()<<"  Reward:"<<x.getReward()<<"  Duration(seg):"<<x.getDuration()<<endl;
+        }
+    }
+    else{
+        for(auto x: storage){
+            cout<<"ID:"<<x.getId()<<"  Volume:"<<x.getVolume()<<"  Weight:"<<x.getWeight()<<"  Reward:"<<x.getReward()<<"  Duration(seg):"<<x.getDuration()<<endl;
+        }
     }
     cout<<endl;
     initialMenu();
 }
 
 void Application::seeExpressOrders() {
+
     for(auto x: expressOrders){
         cout<<"ID:"<<x.getId()<<"  Volume:"<<x.getVolume()<<"  Weight:"<<x.getWeight()<<"  Reward:"<<x.getReward()<<"  Duration(seg):"<<x.getDuration()<<endl;
     }
@@ -287,6 +295,11 @@ void Application::seeExpressOrders() {
 }
 
 void Application::seeEstafetas(){
+    if(estafetas.empty()){
+        for(auto x: originalestafetas){
+            cout<<"ID:"<<x.getId()<<"  Volume MAX:"<<x.getVolumeMax()<<"  Weight MAX:"<<x.getWeightMax()<<endl;
+        }
+    }
     for(auto x: estafetas){
         cout<<"ID:"<<x.getId()<<"  Volume MAX:"<<x.getVolumeMax()<<"  Weight MAX:"<<x.getWeightMax()<<endl;
     }
@@ -399,6 +412,9 @@ void Application::auxSearchEstafeta() {
 bool Application::sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2) {
     if(estafeta1.isOccupied() && !estafeta2.isOccupied())
         return true;
+    if (estafeta1.isOccupied() && estafeta2.isOccupied()){
+        return ((estafeta1.getfreeVolume() * (double)(estafeta1.getfreeWeight())) / (estafeta1.getCost())) < ((estafeta2.getfreeVolume() * (double)(estafeta2.getfreeWeight())) / (estafeta2.getCost()));
+    }
     if (!estafeta1.isOccupied() && !estafeta2.isOccupied()){
         return ((estafeta1.getfreeVolume() * (double)(estafeta1.getfreeWeight())) / (estafeta1.getCost())) > ((estafeta2.getfreeVolume() * (double)(estafeta2.getfreeWeight())) / (estafeta2.getCost()));
     }
@@ -406,6 +422,7 @@ bool Application::sortEstafetasProfit( Estafeta &estafeta1,  Estafeta &estafeta2
 }
 
 bool Application::sortOrdersProfit(const Order &order1, const Order &order2) {
+        //return order1.getReward() > order2.getReward();
         return ((order1.getWeight()) * (double) (order1.getVolume()) / (order1.getReward())) > ((order2.getVolume() * (double) (order2.getWeight())) / (order2.getReward()));
 }
 
